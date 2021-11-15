@@ -13,8 +13,15 @@ public class GraphEditor : Editor
 
         if (GUILayout.Button("Show Graph"))
         {
+
             myTarget.ClearGraph();
             myTarget.MakeGraph();
+
+        } else if (GUILayout.Button("Delete Graph"))
+        {
+            myTarget.ClearGraph();
         }
     }
+
+   
 }

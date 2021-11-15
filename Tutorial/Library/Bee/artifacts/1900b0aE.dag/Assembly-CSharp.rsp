@@ -333,6 +333,8 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/VSSettingsProvider.ref.dll"
 "Assets/Tutorial1/Scripts/Clock.cs"
 "Assets/Tutorial2/Scripts/Graph.cs"
+"Assets/Tutorial3/Scripts/Functions.cs"
+"Assets/Tutorial3/Scripts/Graph3D.cs"
 -langversion:8.0
 
 /deterministic

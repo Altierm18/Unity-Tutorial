@@ -61,8 +61,11 @@
   <ItemGroup>
     <Compile Include="Assets\Tutorial1\Scripts\Clock.cs" />
     <Compile Include="Assets\Tutorial2\Scripts\Graph.cs" />
+    <Compile Include="Assets\Tutorial3\Scripts\Graph3D.cs" />
+    <Compile Include="Assets\Tutorial3\Scripts\Functions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Tutorial3\Shaders\PointShader.shader" />
     <None Include="Assets\Tutorial2\Shaders\PointShader.shader" />
   </ItemGroup>
   <ItemGroup>

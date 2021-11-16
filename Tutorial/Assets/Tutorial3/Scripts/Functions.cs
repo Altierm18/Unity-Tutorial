@@ -85,4 +85,14 @@ public static class Functions
         output.z = s * Cos(PI * u);
         return output;
     }
+
+    public static FunctionName GetNextFunction(FunctionName name)
+    {
+        return (int)name < functions.Length - 1 ? name + 1 : 0;
+    }
+
+    public static Vector3 Morph(float u, float v, float t, Function from, Function to, float progress)
+    {
+        return Vector3.LerpUnclamped(from(u, v, t), to(u, v, t), SmoothStep(0f, 1f, progress));
+    }
 }

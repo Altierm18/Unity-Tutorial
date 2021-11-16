@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class Graph3D : MonoBehaviour
 {
-    public enum GraphType { Quadratic, Wave, MultWave, Cubic , Ripple};
 
     [SerializeField]
-    GraphType type = GraphType.Wave;
+    Functions.FunctionName function;
 
     [SerializeField]
     Transform pointPrefab;
@@ -18,17 +17,17 @@ public class Graph3D : MonoBehaviour
     Transform[] points;
     public void Awake()
     {
-        points = new Transform[resolution];
+        points = new Transform[resolution * resolution];
 
         Vector3 pos = Vector3.zero;
         Vector3 scale = Vector3.one * 2f / resolution;
         for (int i = 0; i < points.Length; i++)
         {
+
             Transform point = Instantiate(pointPrefab);
 
             point.SetParent(transform, false);
-            pos.x = (i + 0.5f) * 2f / resolution - 1f;
-            pos.y = Evaluate(pos.x, 0);
+
             point.localPosition = pos;
             point.localScale = scale;
 
@@ -38,53 +37,25 @@ public class Graph3D : MonoBehaviour
 
     private void Update()
     {
+        Functions.Function evaluate = Functions.GetFunction(function);
+
         float time = Time.time;
-        for (int i = 0; i < points.Length; i++)
+        float step = 2f / resolution;
+        float v = 0.5f * step - 1f;
+        for (int i = 0, x = 0, z = 0; i < points.Length; i++, x++)
         {
-            Transform point = points[i];
-            Vector3 position = point.localPosition;
-            position.y = Evaluate(position.x, time);
-            point.localPosition = position;
+            if (x == resolution)
+            {
+                x = 0;
+                z += 1;
+                v = (z + 0.5f) * step - 1f;
+            }
+            float u = (x + 0.5f) * step - 1f;
+            points[i].localPosition = evaluate(u, v, time);
         }
     }
 
-    public float Evaluate(float x, float t)
-    {
-        float y = 0;
-        switch(type)
-        {
-            case GraphType.Cubic:
-                {
-                    y = Functions.Cube(x);
-                    break;
-                }
-            case GraphType.Quadratic:
-                {
-                    y = Functions.Square(x);
-                    break;
-                }
-            case GraphType.Wave:
-                {
-                    y = Functions.Wave(x, t);
-                    break;
-                }
-            case GraphType.MultWave:
-                {
-                    y = Functions.MultWave(x, t);
-                    break;
-                }
-            case GraphType.Ripple:
-                {
-                    y = Functions.Ripple(x, t);
-                    break;
-                }
-            default:
-                {
-                    break;
-                }
-        }
-        return y;
-    }
+    
 
     public void ClearGraph()
     {
